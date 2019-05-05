@@ -17,7 +17,7 @@ type Metadata struct {
 	Key                   string             `json:"key"`                   // movie + show + music
 	ParentRatingKey       string             `json:"parentRatingKey"`       // show + music
 	GrandparentRatingKey  string             `json:"grandparentRatingKey"`  // show + music
-	GUID                  string             `json:"guid"`                  // movie + show + music
+	GUID                  *url.URL           `json:"guid"`                  // movie + show + music
 	LibrarySectionTitle   string             `json:"librarySectionTitle"`   // movie + show + music
 	LibrarySectionID      int                `json:"librarySectionID"`      // movie + show + music
 	LibrarySectionKey     string             `json:"librarySectionKey"`     // movie + show + music
@@ -63,6 +63,27 @@ type Metadata struct {
 	Role                  []MetadataItemRole `json:"Role"`                  // movie
 	Similar               []MetadataItem     `json:"Similar"`               // movie
 	Mood                  []MetadataItem     `json:"Mood"`                  // music
+}
+
+// UnmarshalJSON allows to convert json values to Go types
+func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
+	// Prepare the catcher
+	type Shadow Metadata
+	tmp := struct {
+		GUID string `json:"guid"`
+		*Shadow
+	}{
+		Shadow: (*Shadow)(m),
+	}
+	// Unmarshal within the catcher
+	if err = json.Unmarshal(data, &tmp); err != nil {
+		return
+	}
+	// Use catcher values to build the golang one
+	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
+		return fmt.Errorf("can't convert GUID string as URL: %v", err)
+	}
+	return
 }
 
 /*
