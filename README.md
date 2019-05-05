@@ -8,7 +8,7 @@ This library provides:
 
 * Golang binding for webhook (JSON) payloads
 * Auto convert values to Golang types when possible (time, duration, IP, URL, etc...)
-* HTTP handler with post multi form compatibility to extract both payload and attached thumbmail when sent (play & rate events)
+* HTTP handler with post multi form compatibility to extract both payload and attached thumbnail when sent (play & rate events)
 
 ## Example
 
