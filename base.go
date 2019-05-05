@@ -10,7 +10,7 @@ import (
 // Payload represents the base structure for all plex webhooks
 type Payload struct {
 	// Base
-	Rating  *int      // only present for Event == EventTypeRate
+	Rating  int       // only present for Event == EventTypeRate
 	Event   EventType `json:"event"`
 	User    bool      `json:"user"`
 	Owner   bool      `json:"owner"`
@@ -30,12 +30,9 @@ func (p *Payload) UnmarshalJSON(data []byte) (err error) {
 		Shadow: (*Shadow)(p),
 	}
 	if tmp.Event == EventTypeRate {
-		var rating int
-		if rating, err = strconv.Atoi(tmp.Rating); err != nil {
+		if p.Rating, err = strconv.Atoi(tmp.Rating); err != nil {
 			err = fmt.Errorf("can't convert rating as int: %v", err)
-			return
 		}
-		p.Rating = &rating
 	}
 	return
 }
