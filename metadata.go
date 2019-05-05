@@ -12,7 +12,7 @@ import (
 
 // Metadata represents all the metadata associated with a media sent by the webhook
 type Metadata struct {
-	LibrarySectionType    string             `json:"librarySectionType"`    // movie + show + music
+	LibrarySectionType    LibrarySection     `json:"librarySectionType"`    // movie + show + music
 	RatingKey             string             `json:"ratingKey"`             // movie + show + music
 	Key                   string             `json:"key"`                   // movie + show + music
 	ParentRatingKey       string             `json:"parentRatingKey"`       // show + music
@@ -64,6 +64,22 @@ type Metadata struct {
 	Similar               []MetadataItem     `json:"Similar"`               // movie
 	Mood                  []MetadataItem     `json:"Mood"`                  // music
 }
+
+/*
+	Metadata custom
+*/
+
+// LibrarySection represents the of the library section
+type LibrarySection string
+
+const (
+	// LibrarySectionShow represents the shows library type
+	LibrarySectionShow LibrarySection = "show"
+	// LibrarySectionMusic represents the music library type
+	LibrarySectionMusic LibrarySection = "artist"
+	// LibrarySectionMovie represents the movies library type
+	LibrarySectionMovie LibrarySection = "movie"
+)
 
 /*
 	Metadata items
