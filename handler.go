@@ -17,7 +17,7 @@ type Event struct {
 	Thumb   *EventFile
 }
 
-// EventFile contains all the relevent data about the thumb file (if sended).
+// EventFile contains all the relevant data about the thumb file (if sended).
 type EventFile struct {
 	Filename string
 	Data     []byte

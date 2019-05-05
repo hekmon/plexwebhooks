@@ -123,7 +123,7 @@ const (
 	MediaTypeMovie MediaType = "movie"
 	// MediaTypeEpisode represents the media type for a show episode
 	MediaTypeEpisode MediaType = "episode"
-	// MediaTypeTrack represents tje media type for an audio track
+	// MediaTypeTrack represents the media type for an audio track
 	MediaTypeTrack MediaType = "track"
 )
 
