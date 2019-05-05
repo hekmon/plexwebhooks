@@ -1,6 +1,7 @@
 package plexwebhook
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 )
@@ -92,8 +93,13 @@ func (mir *MetadataItemRole) UnmarshalJSON(data []byte) (err error) {
 	}{
 		Shadow: (*Shadow)(mir),
 	}
-	if mir.Thumb, err = url.Parse(tmp.Thumb); err != nil {
-		err = fmt.Errorf("can't parse MetadataItemRole thumb as URL: %v", err)
+	if err = json.Unmarshal(data, &tmp); err != nil {
+		return
+	}
+	if tmp.Thumb != "" {
+		if mir.Thumb, err = url.Parse(tmp.Thumb); err != nil {
+			err = fmt.Errorf("can't parse MetadataItemRole thumb as URL: %v", err)
+		}
 	}
 	return
 }
