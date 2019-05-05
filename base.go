@@ -1,6 +1,7 @@
 package plexwebhook
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 	"net/url"
@@ -9,15 +10,14 @@ import (
 
 // Payload represents the base structure for all plex webhooks
 type Payload struct {
-	// Base
-	Rating  int       // only present for Event == EventTypeRate
-	Event   EventType `json:"event"`
-	User    bool      `json:"user"`
-	Owner   bool      `json:"owner"`
-	Account Account   `json:"Account"`
-	Server  Server    `json:"Server"`
-	Player  Player    `json:"Player"`
-	// Metadata
+	Rating   int       // only present for Event == EventTypeRate
+	Event    EventType `json:"event"`
+	User     bool      `json:"user"`
+	Owner    bool      `json:"owner"`
+	Account  Account   `json:"Account"`
+	Server   Server    `json:"Server"`
+	Player   Player    `json:"Player"`
+	Metadata Metadata  `json:"Metadata"`
 }
 
 // UnmarshalJSON allows to convert json values to Go types
@@ -28,6 +28,9 @@ func (p *Payload) UnmarshalJSON(data []byte) (err error) {
 		*Shadow
 	}{
 		Shadow: (*Shadow)(p),
+	}
+	if err = json.Unmarshal(data, &tmp); err != nil {
+		return
 	}
 	if tmp.Event == EventTypeRate {
 		if p.Rating, err = strconv.Atoi(tmp.Rating); err != nil {
@@ -79,6 +82,9 @@ func (a *Account) UnmarshalJSON(data []byte) (err error) {
 	}{
 		Shadow: (*Shadow)(a),
 	}
+	if err = json.Unmarshal(data, &tmp); err != nil {
+		return
+	}
 	if a.Thumb, err = url.Parse(tmp.Thumb); err != nil {
 		err = fmt.Errorf("can't parse account thumb as URL: %v", err)
 	}
@@ -115,6 +121,9 @@ func (p *Player) UnmarshalJSON(data []byte) (err error) {
 		*Shadow
 	}{
 		Shadow: (*Shadow)(p),
+	}
+	if err = json.Unmarshal(data, &tmp); err != nil {
+		return
 	}
 	p.PublicAddress = net.ParseIP(tmp.PublicAddress)
 	return
