@@ -59,7 +59,9 @@ func HTTPHandler(process func(event *Event, err error)) http.HandlerFunc {
 				}
 				// Extract payload
 				event.Payload = new(Payload)
-				if err = json.NewDecoder(formPart).Decode(event.Payload); err != nil {
+				decoder := json.NewDecoder(formPart)
+				decoder.DisallowUnknownFields() // dev
+				if err = decoder.Decode(event.Payload); err != nil {
 					err = fmt.Errorf("payload JSON decode failed: %v", err)
 					break
 				}
