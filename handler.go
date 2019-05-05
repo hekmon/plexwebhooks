@@ -81,7 +81,7 @@ func handleFormPart(event *Event, formPart *multipart.Part) (err error) {
 		// Extract payload
 		event.Payload = new(Payload)
 		decoder := json.NewDecoder(formPart)
-		decoder.DisallowUnknownFields() // dev
+		// decoder.DisallowUnknownFields() // dev
 		if err = decoder.Decode(event.Payload); err != nil {
 			return fmt.Errorf("payload JSON decode failed: %v", err)
 		}
