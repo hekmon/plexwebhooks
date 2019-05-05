@@ -50,38 +50,7 @@ func HTTPHandler(process func(event *Event, err error)) http.HandlerFunc {
 		event := new(Event)
 		var formPart *multipart.Part
 		for formPart, err = multiPartReader.NextPart(); err == nil; formPart, err = multiPartReader.NextPart() {
-			switch formPart.FormName() {
-			case "payload":
-				// Only one payload
-				if event.Payload != nil {
-					err = errors.New("payload part is present more than once")
-					break
-				}
-				// Extract payload
-				event.Payload = new(Payload)
-				decoder := json.NewDecoder(formPart)
-				decoder.DisallowUnknownFields() // dev
-				if err = decoder.Decode(event.Payload); err != nil {
-					err = fmt.Errorf("payload JSON decode failed: %v", err)
-					break
-				}
-			case "thumb":
-				// Only one thumb can be present
-				if event.Thumb != nil {
-					err = errors.New("thumb part is present more than once")
-					break
-				}
-				// Prepare thumb event payload & set filename
-				event.Thumb = &EventFile{
-					Filename: formPart.FileName(),
-				}
-				// Extract thumb data
-				if event.Thumb.Data, err = ioutil.ReadAll(formPart); err != nil {
-					err = fmt.Errorf("error while reading thumb form part data: %v", err)
-					break
-				}
-			default:
-				err = fmt.Errorf("unexpected form part encountered: %s", formPart.FormName())
+			if err = handleFormPart(event, formPart); err != nil {
 				break
 			}
 		}
@@ -100,4 +69,37 @@ func HTTPHandler(process func(event *Event, err error)) http.HandlerFunc {
 		// Prepare clean http close
 		w.WriteHeader(http.StatusOK)
 	}
+}
+
+func handleFormPart(event *Event, formPart *multipart.Part) (err error) {
+	switch formPart.FormName() {
+	case "payload":
+		// Only one payload
+		if event.Payload != nil {
+			return errors.New("payload part is present more than once")
+		}
+		// Extract payload
+		event.Payload = new(Payload)
+		decoder := json.NewDecoder(formPart)
+		decoder.DisallowUnknownFields() // dev
+		if err = decoder.Decode(event.Payload); err != nil {
+			return fmt.Errorf("payload JSON decode failed: %v", err)
+		}
+	case "thumb":
+		// Only one thumb can be present
+		if event.Thumb != nil {
+			return errors.New("thumb part is present more than once")
+		}
+		// Prepare thumb event payload & set filename
+		event.Thumb = &EventFile{
+			Filename: formPart.FileName(),
+		}
+		// Extract thumb data
+		if event.Thumb.Data, err = ioutil.ReadAll(formPart); err != nil {
+			return fmt.Errorf("error while reading thumb form part data: %v", err)
+		}
+	default:
+		return fmt.Errorf("unexpected form part encountered: %s", formPart.FormName())
+	}
+	return
 }
