@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"time"
 )
 
 /*
@@ -37,7 +38,7 @@ type Metadata struct {
 	Rating                float64            `json:"rating"`                // movie + show
 	RatingCount           int                `json:"ratingCount"`           // music
 	ViewCount             int                `json:"viewCount"`             // movie + show + music
-	LastViewedAt          int                `json:"lastViewedAt"`          // movie + show + music
+	LastViewedAt          time.Time          `json:"lastViewedAt"`          // movie + show + music
 	Year                  int                `json:"year"`                  // movie + show
 	Tagline               string             `json:"tagline"`               // movie
 	Thumb                 string             `json:"thumb"`                 // movie + show + music
@@ -47,10 +48,10 @@ type Metadata struct {
 	GrandparentThumb      string             `json:"grandparentThumb"`      // show + music
 	GrandparentArt        string             `json:"grandparentArt"`        // show
 	GrandparentTheme      string             `json:"grandparentTheme"`      // show
-	Duration              int                `json:"duration"`              // movie
-	OriginallyAvailableAt string             `json:"originallyAvailableAt"` // movie
-	AddedAt               int                `json:"addedAt"`               // movie + show + music
-	UpdatedAt             int                `json:"updatedAt"`             // movie + show + music
+	Duration              time.Duration      `json:"duration"`              // movie
+	OriginallyAvailableAt time.Time          `json:"originallyAvailableAt"` // movie
+	AddedAt               time.Time          `json:"addedAt"`               // movie + show + music
+	UpdatedAt             time.Time          `json:"updatedAt"`             // movie + show + music
 	PrimaryExtraKey       string             `json:"primaryExtraKey"`       // movie
 	RatingImage           string             `json:"ratingImage"`           // movie
 	ChapterSource         string             `json:"chapterSource"`         // show (movie too ?)
@@ -70,7 +71,12 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	// Prepare the catcher
 	type Shadow Metadata
 	tmp := struct {
-		GUID string `json:"guid"`
+		GUID                  string `json:"guid"`
+		LastViewedAt          int64  `json:"lastViewedAt"`
+		Duration              int64  `json:"duration"`
+		OriginallyAvailableAt string `json:"originallyAvailableAt"`
+		AddedAt               int64  `json:"addedAt"`
+		UpdatedAt             int64  `json:"updatedAt"`
 		*Shadow
 	}{
 		Shadow: (*Shadow)(m),
@@ -83,6 +89,13 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
 		return fmt.Errorf("can't convert GUID string as URL: %v", err)
 	}
+	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
+	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
+	if m.OriginallyAvailableAt, err = time.Parse("2006-01-02", tmp.OriginallyAvailableAt); err != nil {
+		return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %v", err)
+	}
+	m.AddedAt = time.Unix(tmp.AddedAt, 0)
+	m.UpdatedAt = time.Unix(tmp.UpdatedAt, 0)
 	return
 }
 
