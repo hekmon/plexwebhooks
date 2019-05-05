@@ -23,7 +23,7 @@ type Metadata struct {
 	LibrarySectionID      int                `json:"librarySectionID"`      // movie + show + music
 	LibrarySectionKey     string             `json:"librarySectionKey"`     // movie + show + music
 	Studio                string             `json:"studio"`                // movie
-	Type                  string             `json:"type"`                  // movie + show + music
+	Type                  MediaType          `json:"type"`                  // movie + show + music
 	Title                 string             `json:"title"`                 // movie + show + music
 	TitleSort             string             `json:"titleSort"`             // show (should be movie too)
 	GrandparentKey        string             `json:"grandparentKey"`        // music
@@ -113,6 +113,18 @@ const (
 	LibrarySectionMusic LibrarySection = "artist"
 	// LibrarySectionMovie represents the movies library type
 	LibrarySectionMovie LibrarySection = "movie"
+)
+
+// MediaType represente the type of media related to the webhook event
+type MediaType string
+
+const (
+	// MediaTypeMovie represents the media type for a movie
+	MediaTypeMovie MediaType = "movie"
+	// MediaTypeEpisode represents the media type for a show episode
+	MediaTypeEpisode MediaType = "episode"
+	// MediaTypeTrack represents tje media type for an audio track
+	MediaTypeTrack MediaType = "track"
 )
 
 /*
