@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-const (
-	maxMem = 64 * 1024 * 1024
-)
-
 // Event contains all the information extract from the webhook.
 // Start by checking the error.
 type Event struct {
