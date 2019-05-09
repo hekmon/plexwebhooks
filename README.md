@@ -49,7 +49,7 @@ func processHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     // Use the multipart reader to parse the request body
-    payload, thumb, err := plexwebhooks.HookExtractor(multiPartReader)
+    payload, thumb, err := plexwebhooks.Extract(multiPartReader)
     if err != nil {
         w.WriteHeader(http.StatusInternalServerError)
         // Try to write the error as http body
