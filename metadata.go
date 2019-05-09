@@ -91,8 +91,10 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	}
 	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
-	if m.OriginallyAvailableAt, err = time.Parse("2006-01-02", tmp.OriginallyAvailableAt); err != nil {
-		return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %v", err)
+	if tmp.OriginallyAvailableAt != "" {
+		if m.OriginallyAvailableAt, err = time.Parse("2006-01-02", tmp.OriginallyAvailableAt); err != nil {
+			return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %v", err)
+		}
 	}
 	m.AddedAt = time.Unix(tmp.AddedAt, 0)
 	m.UpdatedAt = time.Unix(tmp.UpdatedAt, 0)
