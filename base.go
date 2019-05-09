@@ -1,4 +1,4 @@
-package plexwebhook
+package plexwebhooks
 
 import (
 	"encoding/json"
