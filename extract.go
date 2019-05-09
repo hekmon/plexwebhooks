@@ -15,8 +15,8 @@ type Thumbnail struct {
 	Data     []byte
 }
 
-// HookExtractor extract the payload and the thumbnail (if present) from a multipart reader
-func HookExtractor(mpr *multipart.Reader) (payload *Payload, thumbnail *Thumbnail, err error) {
+// Extract extracts the payload and the thumbnail (if present) from a multipart reader
+func Extract(mpr *multipart.Reader) (payload *Payload, thumbnail *Thumbnail, err error) {
 	if mpr == nil {
 		err = errors.New("multipart reader can't be nil")
 		return
