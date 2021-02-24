@@ -15,8 +15,10 @@ import (
 type Metadata struct {
 	AddedAt               time.Time          `json:"addedAt"`               // movie + show + music
 	Art                   string             `json:"art"`                   // movie + show
+	AttributionLogo       string             `json:"attributionLogo"`       // streaming movie
 	AudienceRating        float64            `json:"audienceRating"`        // movie
 	AudienceRatingImage   string             `json:"audienceRatingImage"`   // movie
+	Banner                string             `json:"banner"`                // movie
 	ChapterSource         string             `json:"chapterSource"`         // show (movie too ?)
 	Collection            []MetadataItem     `json:"Collection"`            // movie
 	ContentRating         string             `json:"contentRating"`         // movie + show
@@ -33,6 +35,7 @@ type Metadata struct {
 	GrandparentTitle      string             `json:"grandparentTitle"`      // music
 	GUID                  *url.URL           `json:"guid"`                  // movie + show + music
 	Index                 int                `json:"index"`                 // show + music
+	Indirect              bool               `json:"indirect"`              // movie
 	Key                   string             `json:"key"`                   // movie + show + music
 	LastRatedAt           time.Time          `json:"lastRatedAt"`           // movie + show + music
 	LastViewedAt          time.Time          `json:"lastViewedAt"`          // movie + show + music
@@ -69,6 +72,7 @@ type Metadata struct {
 	UpdatedAt             time.Time          `json:"updatedAt"`             // movie + show + music
 	UserRating            float64            `json:"userRating"`            // movie
 	ViewCount             int                `json:"viewCount"`             // movie + show + music
+	ViewOffset            int                `json:"viewOffset"`            // movie
 	Writer                []MetadataItem     `json:"Writer"`                // movie + show
 	Year                  int                `json:"year"`                  // movie + show
 }
