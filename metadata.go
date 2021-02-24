@@ -24,6 +24,7 @@ type Metadata struct {
 	Director              []MetadataItem     `json:"Director"`              // movie + show
 	Duration              time.Duration      `json:"duration"`              // movie
 	Genre                 []MetadataItem     `json:"Genre"`                 // movie
+	GenuineMediaAnalysis  string             `json:"genuineMediaAnalysis"`  // show
 	GrandparentArt        string             `json:"grandparentArt"`        // show
 	GrandparentKey        string             `json:"grandparentKey"`        // music
 	GrandparentRatingKey  string             `json:"grandparentRatingKey"`  // show + music
@@ -39,6 +40,7 @@ type Metadata struct {
 	LibrarySectionKey     string             `json:"librarySectionKey"`     // movie + show + music
 	LibrarySectionTitle   string             `json:"librarySectionTitle"`   // movie + show + music
 	LibrarySectionType    LibrarySection     `json:"librarySectionType"`    // movie + show + music
+	Live                  string             `json:"live"`                  // show
 	Mood                  []MetadataItem     `json:"Mood"`                  // music
 	OriginallyAvailableAt time.Time          `json:"originallyAvailableAt"` // movie
 	OriginalTitle         string             `json:"originalTitle"`         // music
