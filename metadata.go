@@ -15,7 +15,7 @@ import (
 type Metadata struct {
 	AddedAt               time.Time          `json:"addedAt"`               // movie + show + music
 	Art                   string             `json:"art"`                   // movie + show
-	AttributionLogo       string             `json:"attributionLogo"`       // streaming movie
+	AttributionLogo       *url.URL           `json:"attributionLogo"`       // streaming movie
 	AudienceRating        float64            `json:"audienceRating"`        // movie
 	AudienceRatingImage   string             `json:"audienceRatingImage"`   // movie
 	Banner                string             `json:"banner"`                // movie
@@ -83,6 +83,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	type Shadow Metadata
 	tmp := struct {
 		AddedAt               int64  `json:"addedAt"`
+		AttributionLogo       string `json:"attributionLogo"`
 		Duration              int64  `json:"duration"`
 		GUID                  string `json:"guid"`
 		LastRatedAt           int64  `json:"lastRatedAt"`
@@ -99,7 +100,10 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	}
 	// Use catcher values to build the golang one
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
-		return fmt.Errorf("can't convert GUID string as URL: %w", err)
+		return fmt.Errorf("can not convert GUID string as URL: %w", err)
+	}
+	if m.AttributionLogo, err = url.Parse(tmp.AttributionLogo); err != nil {
+		return fmt.Errorf("can not convert AttributionLogo string as URL: %w", err)
 	}
 	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
