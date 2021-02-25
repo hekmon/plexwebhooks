@@ -100,8 +100,10 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	}
 	// Use catcher values to build the golang one
 	m.AddedAt = time.Unix(tmp.AddedAt, 0)
-	if m.AttributionLogo, err = url.Parse(tmp.AttributionLogo); err != nil {
-		return fmt.Errorf("can not convert AttributionLogo string as URL: %w", err)
+	if tmp.AttributionLogo != "" {
+		if m.AttributionLogo, err = url.Parse(tmp.AttributionLogo); err != nil {
+			return fmt.Errorf("can not convert AttributionLogo string as URL: %w", err)
+		}
 	}
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
