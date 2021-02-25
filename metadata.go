@@ -18,7 +18,7 @@ type Metadata struct {
 	AttributionLogo       *url.URL           `json:"attributionLogo"`       // streaming movie
 	AudienceRating        float64            `json:"audienceRating"`        // movie
 	AudienceRatingImage   string             `json:"audienceRatingImage"`   // movie
-	Banner                string             `json:"banner"`                // movie
+	Banner                *url.URL           `json:"banner"`                // movie
 	ChapterSource         string             `json:"chapterSource"`         // show (movie too ?)
 	Collection            []MetadataItem     `json:"Collection"`            // movie
 	ContentRating         string             `json:"contentRating"`         // movie + show
@@ -84,6 +84,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	tmp := struct {
 		AddedAt               int64  `json:"addedAt"`
 		AttributionLogo       string `json:"attributionLogo"`
+		Banner                string `json:"banner"`
 		Duration              int64  `json:"duration"`
 		GUID                  string `json:"guid"`
 		LastRatedAt           int64  `json:"lastRatedAt"`
@@ -103,6 +104,11 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	if tmp.AttributionLogo != "" {
 		if m.AttributionLogo, err = url.Parse(tmp.AttributionLogo); err != nil {
 			return fmt.Errorf("can not convert AttributionLogo string as URL: %w", err)
+		}
+	}
+	if tmp.Banner != "" {
+		if m.Banner, err = url.Parse(tmp.Banner); err != nil {
+			return fmt.Errorf("can not convert Banner string as URL: %w", err)
 		}
 	}
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
