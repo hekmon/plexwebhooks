@@ -99,22 +99,22 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 		return
 	}
 	// Use catcher values to build the golang one
-	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
-		return fmt.Errorf("can not convert GUID string as URL: %w", err)
-	}
+	m.AddedAt = time.Unix(tmp.AddedAt, 0)
 	if m.AttributionLogo, err = url.Parse(tmp.AttributionLogo); err != nil {
 		return fmt.Errorf("can not convert AttributionLogo string as URL: %w", err)
 	}
-	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
+	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
+		return fmt.Errorf("can not convert GUID string as URL: %w", err)
+	}
+	m.LastRatedAt = time.Unix(tmp.LastRatedAt, 0)
+	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
 	if tmp.OriginallyAvailableAt != "" {
 		if m.OriginallyAvailableAt, err = time.Parse("2006-01-02", tmp.OriginallyAvailableAt); err != nil {
 			return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %w", err)
 		}
 	}
-	m.AddedAt = time.Unix(tmp.AddedAt, 0)
 	m.UpdatedAt = time.Unix(tmp.UpdatedAt, 0)
-	m.LastRatedAt = time.Unix(tmp.LastRatedAt, 0)
 	return
 }
 
