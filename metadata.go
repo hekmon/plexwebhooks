@@ -212,6 +212,7 @@ func (mir *MetadataItemRole) UnmarshalJSON(data []byte) (err error) {
 	return
 }
 
+// MetadataItemField represents a ref to a Metadata.Field entity
 type MetadataItemField struct {
 	Locked bool   `json:"locked"`
 	Name   string `json:"name"`
