@@ -13,70 +13,73 @@ import (
 
 // Metadata represents all the metadata associated with a media sent by the webhook
 type Metadata struct {
-	AddedAt               time.Time          `json:"addedAt"`               // movie + show + music
-	Art                   string             `json:"art"`                   // movie + show
-	AttributionLogo       *url.URL           `json:"attributionLogo"`       // streaming movie
-	AudienceRating        float64            `json:"audienceRating"`        // movie
-	AudienceRatingImage   string             `json:"audienceRatingImage"`   // movie
-	Banner                *url.URL           `json:"banner"`                // movie
-	ChapterSource         string             `json:"chapterSource"`         // show (movie too ?)
-	Collection            []MetadataItem     `json:"Collection"`            // movie
-	ContentRating         string             `json:"contentRating"`         // movie + show
-	Country               []MetadataItem     `json:"Country"`               // movie
-	CreatedAtAccuracy     string             `json:"createdAtAccuracy"`     // photo
-	CreatedAtTZOffset     string             `json:"createdAtTZOffset"`     // photo
-	Director              []MetadataItem     `json:"Director"`              // movie + show
-	Duration              time.Duration      `json:"duration"`              // movie
-	Genre                 []MetadataItem     `json:"Genre"`                 // movie
-	GenuineMediaAnalysis  string             `json:"genuineMediaAnalysis"`  // show
-	GrandparentArt        string             `json:"grandparentArt"`        // show
-	GrandparentKey        string             `json:"grandparentKey"`        // music
-	GrandparentRatingKey  string             `json:"grandparentRatingKey"`  // show + music
-	GrandparentTheme      string             `json:"grandparentTheme"`      // show
-	GrandparentThumb      string             `json:"grandparentThumb"`      // show + music
-	GrandparentTitle      string             `json:"grandparentTitle"`      // music
-	GUID                  *url.URL           `json:"guid"`                  // movie + show + music
-	Index                 int                `json:"index"`                 // show + music
-	Indirect              bool               `json:"indirect"`              // movie
-	Key                   string             `json:"key"`                   // movie + show + music
-	LastRatedAt           time.Time          `json:"lastRatedAt"`           // movie + show + music
-	LastViewedAt          time.Time          `json:"lastViewedAt"`          // movie + show + music
-	LibrarySectionID      int                `json:"librarySectionID"`      // movie + show + music
-	LibrarySectionKey     string             `json:"librarySectionKey"`     // movie + show + music
-	LibrarySectionTitle   string             `json:"librarySectionTitle"`   // movie + show + music
-	LibrarySectionType    LibrarySection     `json:"librarySectionType"`    // movie + show + music
-	Live                  string             `json:"live"`                  // show
-	Mood                  []MetadataItem     `json:"Mood"`                  // music
-	OriginallyAvailableAt time.Time          `json:"originallyAvailableAt"` // movie
-	OriginalTitle         string             `json:"originalTitle"`         // music
-	ParentArt             string             `json:"parentArt"`             // show
-	ParentIndex           int                `json:"parentIndex"`           // show + music
-	ParentKey             string             `json:"parentKey"`             // music
-	ParentRatingKey       string             `json:"parentRatingKey"`       // show + music
-	ParentThumb           string             `json:"parentThumb"`           // show + music
-	ParentTitle           string             `json:"parentTitle"`           // music
-	PrimaryExtraKey       string             `json:"primaryExtraKey"`       // movie
-	Producer              []MetadataItem     `json:"Producer"`              // movie
-	Rating                float64            `json:"rating"`                // movie + show
-	RatingCount           int                `json:"ratingCount"`           // music
-	RatingImage           string             `json:"ratingImage"`           // movie
-	RatingKey             string             `json:"ratingKey"`             // movie + show + music
-	Role                  []MetadataItemRole `json:"Role"`                  // movie
-	Similar               []MetadataItem     `json:"Similar"`               // movie
-	Studio                string             `json:"studio"`                // movie
-	SubType               MediaSubType       `json:"subtype"`               // clip
-	Summary               string             `json:"summary"`               // movie + show + music
-	Tagline               string             `json:"tagline"`               // movie
-	Thumb                 string             `json:"thumb"`                 // movie + show + music
-	Title                 string             `json:"title"`                 // movie + show + music
-	TitleSort             string             `json:"titleSort"`             // show (should be movie too)
-	Type                  MediaType          `json:"type"`                  // movie + show + music
-	UpdatedAt             time.Time          `json:"updatedAt"`             // movie + show + music
-	UserRating            float64            `json:"userRating"`            // movie
-	ViewCount             int                `json:"viewCount"`             // movie + show + music
-	ViewOffset            int                `json:"viewOffset"`            // movie
-	Writer                []MetadataItem     `json:"Writer"`                // movie + show
-	Year                  int                `json:"year"`                  // movie + show
+	AddedAt               time.Time           `json:"addedAt"`               // movie + show + music
+	Art                   string              `json:"art"`                   // movie + show
+	AttributionLogo       *url.URL            `json:"attributionLogo"`       // streaming movie
+	AudienceRating        float64             `json:"audienceRating"`        // movie
+	AudienceRatingImage   string              `json:"audienceRatingImage"`   // movie
+	Banner                *url.URL            `json:"banner"`                // movie
+	Channel               []MetadataItem      `json:"Channel"`               // tv movie
+	ChapterSource         string              `json:"chapterSource"`         // show (movie too ?)
+	Collection            []MetadataItem      `json:"Collection"`            // movie
+	ContentRating         string              `json:"contentRating"`         // movie + show
+	Country               []MetadataItem      `json:"Country"`               // movie
+	CreatedAtAccuracy     string              `json:"createdAtAccuracy"`     // photo
+	CreatedAtTZOffset     string              `json:"createdAtTZOffset"`     // photo
+	Director              []MetadataItem      `json:"Director"`              // movie + show
+	Duration              time.Duration       `json:"duration"`              // movie
+	Field                 []MetadataItemField `json:"Field"`                 // tv movie
+	Genre                 []MetadataItem      `json:"Genre"`                 // movie
+	GenuineMediaAnalysis  string              `json:"genuineMediaAnalysis"`  // show
+	GrandparentArt        string              `json:"grandparentArt"`        // show
+	GrandparentKey        string              `json:"grandparentKey"`        // music
+	GrandparentRatingKey  string              `json:"grandparentRatingKey"`  // show + music
+	GrandparentTheme      string              `json:"grandparentTheme"`      // show
+	GrandparentThumb      string              `json:"grandparentThumb"`      // show + music
+	GrandparentTitle      string              `json:"grandparentTitle"`      // music
+	GUID                  *url.URL            `json:"guid"`                  // movie + show + music
+	Index                 int                 `json:"index"`                 // show + music
+	Indirect              bool                `json:"indirect"`              // movie
+	Key                   string              `json:"key"`                   // movie + show + music
+	LastRatedAt           time.Time           `json:"lastRatedAt"`           // movie + show + music
+	LastViewedAt          time.Time           `json:"lastViewedAt"`          // movie + show + music
+	LibrarySectionID      int                 `json:"librarySectionID"`      // movie + show + music
+	LibrarySectionKey     string              `json:"librarySectionKey"`     // movie + show + music
+	LibrarySectionTitle   string              `json:"librarySectionTitle"`   // movie + show + music
+	LibrarySectionType    LibrarySection      `json:"librarySectionType"`    // movie + show + music
+	Live                  string              `json:"live"`                  // show
+	Mood                  []MetadataItem      `json:"Mood"`                  // music
+	OneShot               string              `json:"oneShot"`               // tv movie
+	OriginallyAvailableAt time.Time           `json:"originallyAvailableAt"` // movie
+	OriginalTitle         string              `json:"originalTitle"`         // music
+	ParentArt             string              `json:"parentArt"`             // show
+	ParentIndex           int                 `json:"parentIndex"`           // show + music
+	ParentKey             string              `json:"parentKey"`             // music
+	ParentRatingKey       string              `json:"parentRatingKey"`       // show + music
+	ParentThumb           string              `json:"parentThumb"`           // show + music
+	ParentTitle           string              `json:"parentTitle"`           // music
+	PrimaryExtraKey       string              `json:"primaryExtraKey"`       // movie
+	Producer              []MetadataItem      `json:"Producer"`              // movie
+	Rating                float64             `json:"rating"`                // movie + show
+	RatingCount           int                 `json:"ratingCount"`           // music
+	RatingImage           string              `json:"ratingImage"`           // movie
+	RatingKey             string              `json:"ratingKey"`             // movie + show + music
+	Role                  []MetadataItemRole  `json:"Role"`                  // movie
+	Similar               []MetadataItem      `json:"Similar"`               // movie
+	Studio                string              `json:"studio"`                // movie
+	SubType               MediaSubType        `json:"subtype"`               // clip
+	Summary               string              `json:"summary"`               // movie + show + music
+	Tagline               string              `json:"tagline"`               // movie
+	Thumb                 string              `json:"thumb"`                 // movie + show + music
+	Title                 string              `json:"title"`                 // movie + show + music
+	TitleSort             string              `json:"titleSort"`             // show (should be movie too)
+	Type                  MediaType           `json:"type"`                  // movie + show + music
+	UpdatedAt             time.Time           `json:"updatedAt"`             // movie + show + music
+	UserRating            float64             `json:"userRating"`            // movie
+	ViewCount             int                 `json:"viewCount"`             // movie + show + music
+	ViewOffset            int                 `json:"viewOffset"`            // movie
+	Writer                []MetadataItem      `json:"Writer"`                // movie + show
+	Year                  int                 `json:"year"`                  // movie + show
 }
 
 // UnmarshalJSON allows to convert json values to Go types
@@ -207,4 +210,9 @@ func (mir *MetadataItemRole) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 	return
+}
+
+type MetadataItemField struct {
+	Locked bool   `json:"locked"`
+	Name   string `json:"name"`
 }
