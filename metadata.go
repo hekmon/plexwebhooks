@@ -23,6 +23,8 @@ type Metadata struct {
 	Collection            []MetadataItem     `json:"Collection"`            // movie
 	ContentRating         string             `json:"contentRating"`         // movie + show
 	Country               []MetadataItem     `json:"Country"`               // movie
+	CreatedAtAccuracy     string             `json:"createdAtAccuracy"`     // photo
+	CreatedAtTZOffset     string             `json:"createdAtTZOffset"`     // photo
 	Director              []MetadataItem     `json:"Director"`              // movie + show
 	Duration              time.Duration      `json:"duration"`              // movie
 	Genre                 []MetadataItem     `json:"Genre"`                 // movie
@@ -154,6 +156,8 @@ const (
 	MediaTypeTrack MediaType = "track"
 	// MediaTypeClip represents the media type for a clip
 	MediaTypeClip MediaType = "clip"
+	// MediaTypePhoto represents the media type for a photo
+	MediaTypePhoto MediaType = "photo"
 )
 
 // MediaSubType represente the subtype of media related to the webhook event
