@@ -34,7 +34,7 @@ func (p *Payload) UnmarshalJSON(data []byte) (err error) {
 	}
 	if tmp.Event == EventTypeRate {
 		if p.Rating, err = strconv.Atoi(tmp.Rating); err != nil {
-			err = fmt.Errorf("can't convert rating as int: %v", err)
+			err = fmt.Errorf("can't convert rating as int: %w", err)
 		}
 	}
 	return
@@ -86,7 +86,7 @@ func (a *Account) UnmarshalJSON(data []byte) (err error) {
 		return
 	}
 	if a.Thumb, err = url.Parse(tmp.Thumb); err != nil {
-		err = fmt.Errorf("can't parse account thumb as URL: %v", err)
+		err = fmt.Errorf("can't parse account thumb as URL: %w", err)
 	}
 	return
 }

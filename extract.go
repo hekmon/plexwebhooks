@@ -36,7 +36,7 @@ func Extract(mpr *multipart.Reader) (payload *Payload, thumbnail *Thumbnail, err
 			decoder := json.NewDecoder(formPart)
 			// decoder.DisallowUnknownFields() // dev
 			if err = decoder.Decode(payload); err != nil {
-				err = fmt.Errorf("payload JSON decode failed: %v", err)
+				err = fmt.Errorf("payload JSON decode failed: %w", err)
 				return
 			}
 		case "thumb":
@@ -51,7 +51,7 @@ func Extract(mpr *multipart.Reader) (payload *Payload, thumbnail *Thumbnail, err
 			}
 			// Extract thumb data
 			if thumbnail.Data, err = ioutil.ReadAll(formPart); err != nil {
-				err = fmt.Errorf("error while reading thumb form part data: %v", err)
+				err = fmt.Errorf("error while reading thumb form part data: %w", err)
 			}
 		default:
 			err = fmt.Errorf("unexpected form part encountered: %s", formPart.FormName())

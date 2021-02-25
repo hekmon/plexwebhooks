@@ -99,13 +99,13 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	}
 	// Use catcher values to build the golang one
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
-		return fmt.Errorf("can't convert GUID string as URL: %v", err)
+		return fmt.Errorf("can't convert GUID string as URL: %w", err)
 	}
 	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
 	if tmp.OriginallyAvailableAt != "" {
 		if m.OriginallyAvailableAt, err = time.Parse("2006-01-02", tmp.OriginallyAvailableAt); err != nil {
-			return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %v", err)
+			return fmt.Errorf("can't parse 'OriginallyAvailableAt' as time.Time: %w", err)
 		}
 	}
 	m.AddedAt = time.Unix(tmp.AddedAt, 0)
@@ -187,7 +187,7 @@ func (mir *MetadataItemRole) UnmarshalJSON(data []byte) (err error) {
 	}
 	if tmp.Thumb != "" {
 		if mir.Thumb, err = url.Parse(tmp.Thumb); err != nil {
-			err = fmt.Errorf("can't parse MetadataItemRole thumb as URL: %v", err)
+			err = fmt.Errorf("can't parse MetadataItemRole thumb as URL: %w", err)
 		}
 	}
 	return
