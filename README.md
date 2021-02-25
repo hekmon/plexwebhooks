@@ -1,6 +1,6 @@
 # Plex Webhooks
 
-[![GoDoc](https://godoc.org/github.com/hekmon/plexwebhooks?status.svg)](https://godoc.org/github.com/hekmon/plexwebhooks) [![Go Report Card](https://goreportcard.com/badge/github.com/hekmon/plexwebhooks)](https://goreportcard.com/report/github.com/hekmon/plexwebhooks)
+[![Go Reference](https://pkg.go.dev/badge/github.com/hekmon/plexwebhooks.svg)](https://pkg.go.dev/github.com/hekmon/plexwebhooks) [![Go Report Card](https://goreportcard.com/badge/github.com/hekmon/plexwebhooks)](https://goreportcard.com/report/github.com/hekmon/plexwebhooks)
 
 Golang binding for [Plex Webhooks](https://support.plex.tv/articles/115002267687-webhooks/).
 
