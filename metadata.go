@@ -58,6 +58,7 @@ type Metadata struct {
 	ParentRatingKey       string              `json:"parentRatingKey"`       // show + music
 	ParentThumb           string              `json:"parentThumb"`           // show + music
 	ParentTitle           string              `json:"parentTitle"`           // music
+	ParentYear            int                 `json:"parentYear"`            // music
 	PrimaryExtraKey       string              `json:"primaryExtraKey"`       // movie
 	Producer              []MetadataItem      `json:"Producer"`              // movie
 	Rating                float64             `json:"rating"`                // movie + show
