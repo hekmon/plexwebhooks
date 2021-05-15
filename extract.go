@@ -52,6 +52,7 @@ func Extract(mpr *multipart.Reader) (payload *Payload, thumbnail *Thumbnail, err
 			// Extract thumb data
 			if thumbnail.Data, err = ioutil.ReadAll(formPart); err != nil {
 				err = fmt.Errorf("error while reading thumb form part data: %w", err)
+				return
 			}
 		default:
 			err = fmt.Errorf("unexpected form part encountered: %s", formPart.FormName())
