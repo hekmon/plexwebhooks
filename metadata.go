@@ -38,6 +38,7 @@ type Metadata struct {
 	GrandparentThumb      string              `json:"grandparentThumb"`      // show + music
 	GrandparentTitle      string              `json:"grandparentTitle"`      // music
 	GUID                  *url.URL            `json:"guid"`                  // movie + show + music
+	GUIDExternal          []*url.URL          `json:"Guid"`                  // movie + show
 	Index                 int                 `json:"index"`                 // show + music
 	Indirect              bool                `json:"indirect"`              // movie
 	Key                   string              `json:"key"`                   // movie + show + music
@@ -88,15 +89,16 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	// Prepare the catcher
 	type Shadow Metadata
 	tmp := struct {
-		AddedAt               int64  `json:"addedAt"`
-		AttributionLogo       string `json:"attributionLogo"`
-		Banner                string `json:"banner"`
-		Duration              int64  `json:"duration"`
-		GUID                  string `json:"guid"`
-		LastRatedAt           int64  `json:"lastRatedAt"`
-		LastViewedAt          int64  `json:"lastViewedAt"`
-		OriginallyAvailableAt string `json:"originallyAvailableAt"`
-		UpdatedAt             int64  `json:"updatedAt"`
+		AddedAt               int64          `json:"addedAt"`
+		AttributionLogo       string         `json:"attributionLogo"`
+		Banner                string         `json:"banner"`
+		Duration              int64          `json:"duration"`
+		GUID                  string         `json:"guid"`
+		GUIDExternal          []MetadataGUID `json:"Guid"`
+		LastRatedAt           int64          `json:"lastRatedAt"`
+		LastViewedAt          int64          `json:"lastViewedAt"`
+		OriginallyAvailableAt string         `json:"originallyAvailableAt"`
+		UpdatedAt             int64          `json:"updatedAt"`
 		*Shadow
 	}{
 		Shadow: (*Shadow)(m),
@@ -119,7 +121,16 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	}
 	m.Duration = time.Duration(tmp.Duration) * time.Millisecond
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
-		return fmt.Errorf("can not convert GUID string as URL: %w", err)
+		return fmt.Errorf("can not convert GUID string from field guid as URL: %w", err)
+	}
+	for _, g := range tmp.GUIDExternal {
+		if g.ID != "" {
+			ge, err := url.Parse(g.ID)
+			if err != nil {
+				return fmt.Errorf("can not convert GUID string from field Guid as URL: %w", err)
+			}
+			m.GUIDExternal = append(m.GUIDExternal, ge)
+		}
 	}
 	m.LastRatedAt = time.Unix(tmp.LastRatedAt, 0)
 	m.LastViewedAt = time.Unix(tmp.LastViewedAt, 0)
@@ -217,4 +228,9 @@ func (mir *MetadataItemRole) UnmarshalJSON(data []byte) (err error) {
 type MetadataItemField struct {
 	Locked bool   `json:"locked"`
 	Name   string `json:"name"`
+}
+
+// MetadataGUID represents a ref to third-party ids, i.e. imdb and tmdb
+type MetadataGUID struct {
+	ID string `json:"id"`
 }
