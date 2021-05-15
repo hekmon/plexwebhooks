@@ -123,6 +123,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) (err error) {
 	if m.GUID, err = url.Parse(tmp.GUID); err != nil {
 		return fmt.Errorf("can not convert GUID string from field guid as URL: %w", err)
 	}
+	m.GUIDExternal = make([]*url.URL, 0, len(tmp.GUIDExternal))
 	for _, g := range tmp.GUIDExternal {
 		if g.ID != "" {
 			ge, err := url.Parse(g.ID)
