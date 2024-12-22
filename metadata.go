@@ -66,6 +66,7 @@ type Metadata struct {
 	RatingCount           int                 `json:"ratingCount"`           // music
 	RatingImage           string              `json:"ratingImage"`           // movie
 	RatingKey             string              `json:"ratingKey"`             // movie + show + music
+	Ratings               []MetadataRating    `json:"Rating"`                // movie + show
 	Role                  []MetadataItemRole  `json:"Role"`                  // movie
 	Similar               []MetadataItem      `json:"Similar"`               // movie
 	Studio                string              `json:"studio"`                // movie
@@ -234,4 +235,11 @@ type MetadataItemField struct {
 // MetadataGUID represents a ref to third-party ids, i.e. imdb and tmdb
 type MetadataGUID struct {
 	ID string `json:"id"`
+}
+
+// MetadataRating represents a rating provided by a user.
+type MetadataRating struct {
+	Image string  `json:"image"`
+	Value float64 `json:"value"`
+	Type  string  `json:"type"`
 }
